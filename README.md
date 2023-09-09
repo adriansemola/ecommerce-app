@@ -1,6 +1,6 @@
 # ReCuerda
 
-Es un trabajo práctica para un curso inicial de React. Es una ecommerce  basada en el negocio de ventas de instrumentos musicales.
+Es un trabajo práctico para un curso inicial de React. Es una ecommerce  basada en el negocio de ventas de instrumentos musicales.
 
 Este proyecto se inicializó con [Create React App](https://github.com/facebook/create-react-app).
 
