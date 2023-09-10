@@ -1,9 +1,7 @@
-import { NavLink } from 'react-router-dom';
-
 const Option = ({ name }) => {
   return (
     <>
-      <NavLink className="nav-link" to={"/" + name}>{name}</NavLink>
+      <p className="nav-link" to={"/" + name}>{name}</p>
     </>
   )
 }
