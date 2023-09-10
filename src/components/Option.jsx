@@ -1,7 +1,7 @@
 const Option = ({ name }) => {
   return (
     <>
-      <p className="nav-link" to={"/" + name}>{name}</p>
+      <span className="nav-link" to={"/" + name}>{name}</span>
     </>
   )
 }
