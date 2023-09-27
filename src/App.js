@@ -1,36 +1,41 @@
 import './App.css';
-import NavBar from './components/NavBar';
 import ItemListContainer from './components/ItemListContainer';
-
-import { useEffect, useState } from 'react';
-import mockService from './mock/mockService';
+import ItemDetailContainer from './components/ItemDetailContainer';
+import Layout from './components/Layout';
+import { useState } from 'react';
+import { useGetCategories } from './hooks/useGetCategories';
 import { Route, Routes } from 'react-router-dom';
 
 function App() {
-  const [contador,setContador]=useState(0)
-  const [categorias, setDatos] = useState(null);
+  const [contador, setContador] = useState(0)
+  const { categorias, isLoading } = useGetCategories();
+  if (isLoading) {
+    return <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+      <div className="spinner-border spinner-border-md" role="status">
+      </div>
+    </div>
+  }
 
-  useEffect(() => {
-    // Simula una solicitud al servicio
-    const response = mockService.getCategories;
-
-    setDatos(response);}, []);
-    if (!categorias) {
-      return <div>No hay categorias disponibles.</div>;
-    }
-
+  const modificaContador = (valor) => {
+    setContador(contador + valor)
+  }
   return (
     <div className="App">
-      <NavBar cartCount={contador} name="ReCuerda" categorias={categorias}/>
+      <Layout contador={contador}>
       <Routes>
+        <Route exact path="/" element={<ItemListContainer modificaContador={modificaContador} />} />
+        <Route exact path="/item/:id" element={<ItemDetailContainer modificaContador={modificaContador} />} />
 
-      {categorias.map((option,index)=>
-        <Route key={index}  path={"/"+option} element={<ItemListContainer callback={setContador} contador={contador} categoria={option}/>} />
-      )}
-      <Route   path="/" element={<ItemListContainer element={setContador} contador={contador}/>} />
+        {categorias.map((option, index) =>
+          <Route key={index} exact path="categoria/:categoria" element={<ItemListContainer modificaContador={modificaContador} />} />
+        )}
 
       </Routes>
+
+      </Layout>
+
     </div>
+
 
   );
 }
