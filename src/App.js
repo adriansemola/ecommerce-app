@@ -1,42 +1,27 @@
-import './App.css';
 import ItemListContainer from './components/ItemListContainer';
 import ItemDetailContainer from './components/ItemDetailContainer';
 import Layout from './components/Layout';
-import { useState } from 'react';
-import { useGetCategories } from './hooks/useGetCategories';
 import { Route, Routes } from 'react-router-dom';
+import { CartProvider } from './context/CartContext';
+import CartView from './components/CartWiew';
+import Checkout from './components/Checkout';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
-  const [contador, setContador] = useState(0)
-  const { categorias, isLoading } = useGetCategories();
-  if (isLoading) {
-    return <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
-      <div className="spinner-border spinner-border-md" role="status">
-      </div>
-    </div>
-  }
-
-  const modificaContador = (valor) => {
-    setContador(contador + valor)
-  }
   return (
-    <div className="App">
-      <Layout contador={contador}>
-      <Routes>
-        <Route exact path="/" element={<ItemListContainer modificaContador={modificaContador} />} />
-        <Route exact path="/item/:id" element={<ItemDetailContainer modificaContador={modificaContador} />} />
-
-        {categorias.map((option, index) =>
-          <Route key={index} exact path="categoria/:categoria" element={<ItemListContainer modificaContador={modificaContador} />} />
-        )}
-
-      </Routes>
-
-      </Layout>
-
-    </div>
-
-
+    <>
+      <CartProvider>
+        <Layout>
+          <Routes>
+            <Route exact path="/" element={<ItemListContainer/>} />
+            <Route exact path="/item/:id" element={<ItemDetailContainer />} />
+            <Route exact path="categoria/:categoria" element={<ItemListContainer/>} />
+            <Route exact path="/cart" element={<CartView/>} />
+            <Route exact path="/checkout" element={<Checkout/>} />
+          </Routes>
+        </Layout>
+      </CartProvider>
+    </>
   );
 }
 

@@ -1,11 +1,11 @@
-import Option from "./Option"
+import { NavLink } from 'react-router-dom';
 
-const MenuOption = ({ options }) => {
+const MenuOption = ({ categorias }) => {
   return (
-    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-      {options.map((option, index) => (
+    <ul className="navbar-nav me-auto mb-2 mb-lg-0 ">
+      {categorias.map((categoria, index) => (
         <li key={index} className="nav-item" >
-          <Option name={option} />
+      <NavLink className="nav-link" style={{textTransform: "capitalize"}}to={"/categoria/" + categoria}>{categoria}</NavLink>
         </li>))}
     </ul>
   )
